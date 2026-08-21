@@ -1,7 +1,7 @@
 
 // import { CATEGORY_META } from "../utils/placeMeta";
 
-// const API_KEY = "3464fc35a5f24352a59b81f378a46e5d";
+// const API_KEY = process.env.REACT_APP_GEOAPIFY_KEY;
 
 // export const MOOD_CATEGORIES = {
 //   work: ["catering.cafe", "education.library", "office.coworking", "activity.hackerspace", "commercial.books"],
@@ -47,7 +47,7 @@
 // }
 import { CATEGORY_META } from "../utils/placeMeta";
 
-const API_KEY = "3464fc35a5f24352a59b81f378a46e5d";
+const API_KEY = process.env.REACT_APP_GEOAPIFY_KEY;
 
 export const MOOD_CATEGORIES = {
   work: ["catering.cafe", "education.library", "office.coworking", "activity.hackerspace", "commercial.books"],

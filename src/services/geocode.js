@@ -1,4 +1,4 @@
-const API_KEY = "3464fc35a5f24352a59b81f378a46e5d"; // same key as placesApi.js
+const API_KEY = process.env.REACT_APP_GEOAPIFY_KEY;
 
 export async function searchLocation(query) {
   const res = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(query)}&limit=5&apiKey=${API_KEY}`);
