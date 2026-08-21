@@ -15,7 +15,7 @@ import { trackSearch } from "../utils/activityTracker";
 const Results = () => {
   const [searchParams] = useSearchParams();
   const mood = searchParams.get("mood");
-  const q = searchParams.get("q");
+
   const urlMaxBudget = searchParams.get("maxBudget");
   const shouldOpenLocation = searchParams.get("openLocation") === "1";
 
