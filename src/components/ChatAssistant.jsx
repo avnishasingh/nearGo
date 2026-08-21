@@ -112,7 +112,7 @@ const ChatAssistant = () => {
 
     try {
       const chatHistory = newMessages.filter((m) => m.from === "user" || m.from === "ai").map((m) => ({ role: m.from === "user" ? "user" : "assistant", content: m.text }));
-      const res = await fetch("http://localhost:5001/api/chat", {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: chatHistory }),

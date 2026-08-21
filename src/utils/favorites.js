@@ -1,4 +1,4 @@
-const API = "http://localhost:5001/api/favorites";
+const API = `${process.env.REACT_APP_BACKEND_URL}/api/favorites`;
 
 export async function getFavorites() {
   try {
