@@ -70,6 +70,11 @@ const [locationOverride, setLocationOverride] = useState(
   (err) => {
     if (err.code === 1) {
       setError("Location access denied — please allow it and retry.");
+    } else if (!sessionStorage.getItem("geoRetry")) {
+      // pehli baar fail hua — ek automatic full reload try karo
+      sessionStorage.setItem("geoRetry", "1");
+      window.location.reload();
+      return;
     } else {
       setError("Couldn't get your location — check your GPS/network and try again.");
     }
