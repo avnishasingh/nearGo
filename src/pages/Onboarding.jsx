@@ -185,7 +185,9 @@ const Onboarding = () => {
     setOnboarded();
     navigate("/");
   };
-
+const handleAllowLocation = () => {
+  navigator.geolocation.getCurrentPosition(finish, finish);
+};
   const handleContinueName = () => {
   if (!name.trim()) return;
 
