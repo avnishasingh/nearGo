@@ -27,7 +27,19 @@ app.get("/api/favorites", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch favorites" });
   }
 });
-
+app.post('/api/users', async (req, res) => {
+  const { name } = req.body;
+  if (!name || typeof name !== 'string' || !name.trim()) {
+    return res.status(400).json({ error: "Name required" });
+  }
+  try {
+    await pool.query('INSERT INTO app_users (name) VALUES (?)', [name.trim()]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Failed to save user name:", err.message);
+    res.status(500).json({ error: "Failed to save" });
+  }
+});
 app.post("/api/favorites", async (req, res) => {
   try {
     const { place_id, name, category, lat, lon } = req.body;

@@ -186,16 +186,19 @@ const Onboarding = () => {
     navigate("/");
   };
 
-  const handleAllowLocation = () => {
-    navigator.geolocation.getCurrentPosition(finish, finish);
-  };
-
   const handleContinueName = () => {
-    if (!name.trim()) return;
+  if (!name.trim()) return;
 
-    setUserName(name.trim());
-    setStep(3);
-  };
+  setUserName(name.trim());
+
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: name.trim() }),
+  }).catch(() => {});
+
+  setStep(3);
+};
 
   return (
     <div className="onboard-wrap">
