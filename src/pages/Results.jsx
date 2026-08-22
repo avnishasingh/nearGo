@@ -66,9 +66,17 @@ const [locationOverride, setLocationOverride] = useState(
       runFetch(locationOverride.lat, locationOverride.lon);
     } else {
       navigator.geolocation.getCurrentPosition(
-        (pos) => runFetch(pos.coords.latitude, pos.coords.longitude),
-        () => { setError("Location access denied — please allow it and retry."); setLoading(false); }
-      );
+  (pos) => runFetch(pos.coords.latitude, pos.coords.longitude),
+  (err) => {
+    if (err.code === 1) {
+      setError("Location access denied — please allow it and retry.");
+    } else {
+      setError("Couldn't get your location — check your GPS/network and try again.");
+    }
+    setLoading(false);
+  },
+  { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+);
     }
   }, [mood, radius, locationOverride, reloadKey]);
 
