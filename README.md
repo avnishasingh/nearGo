@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# nearGo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A location-aware place recommendation web app that finds nearby spots based on your mood — Work, Date, Quick Bite, Gym, Games, Chill, Sports, Shows, Hospital, ATM/Bank, Shopping, and Nightlife — or via Nova, a built-in AI chat assistant.
 
-## Available Scripts
+🔗 **Live app:** https://near-go-chi.vercel.app/
+🔗 **Backend API:** https://neargo-oqj1.onrender.com
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Mood-based and natural-language search for nearby places
+- Real geolocation + Geoapify Places API (OpenStreetMap-backed data)
+- Transparent, explainable match-score ranking (distance, budget fit, open/closed status)
+- List and interactive map views (Leaflet)
+- Weather-aware suggestions (Open-Meteo)
+- AI chat assistant ("Nova") powered by Groq's LLM API, with a custom hand-animated SVG mascot
+- Save/bookmark places (persisted via MySQL) and recently viewed tracking
+- Personal activity stats and usage-based "vibe" breakdown
+- Installable as a Progressive Web App (PWA) — works offline-tolerant, add-to-home-screen on Android/iOS
+- Custom onboarding flow, fully responsive dark jewel-tone UI
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Frontend:** React 19, React Router, custom CSS-in-JS (no UI framework), react-leaflet
+**Backend:** Node.js, Express, MySQL (via mysql2)
+**APIs:** Geoapify (Places + Geocoding), Groq (LLM chat), Open-Meteo (weather, no key required)
+**Hosting:** Vercel (frontend), Render (backend), Aiven (MySQL)
 
-### `npm test`
+## Running locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Frontend
+\`\`\`bash
+npm install
+npm start
+\`\`\`
+Runs on http://localhost:3000. Requires a `.env` file with:
+\`\`\`
+REACT_APP_GEOAPIFY_KEY=your_geoapify_key
+\`\`\`
 
-### `npm run build`
+### Backend
+\`\`\`bash
+cd backend
+npm install
+node server.js
+\`\`\`
+Runs on http://localhost:5001. Requires a `backend/.env` file with:
+\`\`\`
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=smart_places
+GROQ_API_KEY=your_groq_key
+PORT=5001
+\`\`\`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Notes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This is a personal portfolio project built to demonstrate full-stack development: geolocation and mapping, third-party API integration, a recommendation/ranking algorithm, backend + database design, and AI integration via a proxied LLM call.
