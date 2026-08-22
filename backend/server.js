@@ -1,5 +1,4 @@
-
-require("dotenv").config();
+require("dotenv").config({ path: "./backend/.env" });
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
@@ -13,26 +12,64 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT),
 });
-
+// --- Favorites ---
 // --- Favorites ---
 app.get("/api/favorites", async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM favorites ORDER BY created_at DESC");
-  res.json(rows);
+  try {
+    const [rows] = await pool.query(
+      "SELECT * FROM favorites ORDER BY created_at DESC"
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error("GET favorites error:", err);
+    res.status(500).json({ error: "Failed to fetch favorites" });
+  }
 });
 
 app.post("/api/favorites", async (req, res) => {
-  const { place_id, name, category, lat, lon } = req.body;
-  await pool.query(
-    "INSERT INTO favorites (place_id, name, category, lat, lon) VALUES (?,?,?,?,?)",
-    [place_id, name, category, lat, lon]
-  );
-  res.json({ ok: true });
+  try {
+    const { place_id, name, category, lat, lon } = req.body;
+
+    console.log("Saving favorite:", {
+      place_id,
+      name,
+      category,
+      lat,
+      lon,
+    });
+
+    if (!place_id || !name || lat == null || lon == null) {
+      return res.status(400).json({
+        error: "Missing required favorite fields",
+      });
+    }
+
+    await pool.query(
+      "INSERT INTO favorites (place_id, name, category, lat, lon) VALUES (?,?,?,?,?)",
+      [place_id, name, category, lat, lon]
+    );
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("POST favorite error:", err);
+    res.status(500).json({ error: "Failed to save favorite" });
+  }
 });
 
 app.delete("/api/favorites/:place_id", async (req, res) => {
-  await pool.query("DELETE FROM favorites WHERE place_id = ?", [req.params.place_id]);
-  res.json({ ok: true });
+  try {
+    await pool.query(
+      "DELETE FROM favorites WHERE place_id = ?",
+      [req.params.place_id]
+    );
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("DELETE favorite error:", err);
+    res.status(500).json({ error: "Failed to delete favorite" });
+  }
 });
 
 // --- Real AI chat, key stays server-side ---
